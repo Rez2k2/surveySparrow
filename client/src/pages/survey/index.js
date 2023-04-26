@@ -1,3 +1,3 @@
 export default function Survey() {
-  return <div></div>;
+  return <div>Survey Page</div>;
 }

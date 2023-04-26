@@ -16,7 +16,7 @@ import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
 
 const validateDetails = (e, name, email) => {
-  if (!(name && email)) {
+  if (!(name && email.includes("@"))) {
     e.preventDefault();
     return;
   }
