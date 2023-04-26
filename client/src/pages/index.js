@@ -14,9 +14,11 @@ import * as Icons from "@iconscout/react-unicons";
 import { useState } from "react";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
+const regexExp =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
 
 const validateDetails = (e, name, email) => {
-  if (!(name && email.includes("@"))) {
+  if (!(name && regexExp.test(email))) {
     e.preventDefault();
     return;
   }
