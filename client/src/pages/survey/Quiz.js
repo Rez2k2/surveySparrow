@@ -73,30 +73,29 @@ export default function Quiz({ qnData, index }) {
           })
         )}
       </VStack>
-      <Box
-        position="fixed"
-        bottom="20px"
-        right="calc(50% + 76px)"
-        as="button"
-        colorScheme="teal"
-        border="1px solid teal"
-        borderRadius="50%"
-        width="fit-content"
-        padding="25"
-        sx={{
-          svg: {
-            fill: "teal",
-          },
-          "&:hover": {
-            bgColor: "teal",
-          },
-          "&:hover svg": {
-            fill: "white",
-          },
-        }}
-      >
-        <Icons.UilMicrophone />
-      </Box>
+      <Center position="fixed" bottom="40px" left="0" width="100%">
+        <Box
+          as="button"
+          colorScheme="teal"
+          border="1px solid teal"
+          borderRadius="50%"
+          width="fit-content"
+          padding="25"
+          sx={{
+            svg: {
+              fill: "teal",
+            },
+            "&:hover": {
+              bgColor: "teal",
+            },
+            "&:hover svg": {
+              fill: "white",
+            },
+          }}
+        >
+          <Icons.UilMicrophone />
+        </Box>
+      </Center>
     </Box>
   );
 }
