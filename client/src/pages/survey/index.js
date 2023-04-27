@@ -77,62 +77,6 @@ let qnData = {
       tags: [],
     },
     {
-      id: 7314208,
-      rtxt: "How would you rate the quality of our product?",
-      type: "Rating",
-      multiple_answers: false,
-      is_required: true,
-      properties: {
-        clone: {
-          id: 619411,
-        },
-        data: {
-          rating_scale: 5,
-        },
-      },
-      parent_question_id: null,
-      position: "0.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.710Z",
-      section: {
-        position: "1.000000000000000",
-      },
-      annotations: [],
-      scale_points: [],
-      choices: [],
-      tags: [],
-    },
-    {
-      id: 7314210,
-      rtxt: "How satisfied are you with the competency of our customer support?",
-      type: "OpinionScale",
-      multiple_answers: false,
-      is_required: true,
-      properties: {
-        data: {
-          min: "Not at all satisfied",
-          max: "Extremely satisfied",
-          step: 10,
-          start: 0,
-          mid: "",
-        },
-        clone: {
-          id: 619413,
-        },
-      },
-      parent_question_id: null,
-      position: "0.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.710Z",
-      section: {
-        position: "2.000000000000000",
-      },
-      annotations: [],
-      scale_points: [],
-      choices: [],
-      tags: [],
-    },
-    {
       id: 7314211,
       rtxt: "Off the top of your head, what are the 3 words that you'll use to describe MediaPandaa?",
       type: "TextInput",
@@ -152,6 +96,80 @@ let qnData = {
       created_at: "2023-04-26T06:51:45.710Z",
       updated_at: "2023-04-26T06:51:45.710Z",
       section: {
+        position: "1.000000000000000",
+      },
+      annotations: [],
+      scale_points: [],
+      choices: [],
+      tags: [],
+    },
+    {
+      id: 7329846,
+      rtxt: "Your most favourite dish",
+      type: "MultiChoice",
+      multiple_answers: false,
+      is_required: false,
+      properties: {
+        data: {
+          type: "UNLIMITED",
+          min_limit: "",
+          max_limit: "",
+          exact_choices: "",
+        },
+      },
+      parent_question_id: null,
+      position: "0.000000000000",
+      created_at: "2023-04-27T10:21:02.499Z",
+      updated_at: "2023-04-27T10:21:13.468Z",
+      section: {
+        position: "2.000000000000000",
+      },
+      annotations: [],
+      scale_points: [],
+      choices: [
+        {
+          id: 18714899,
+          txt: "Chop suey",
+          img: "",
+          position: "2.000000000000",
+          question_id: 7329846,
+          scale_point_id: null,
+        },
+        {
+          id: 18714894,
+          txt: "Orange",
+          img: "",
+          position: "1.000000000000",
+          question_id: 7329846,
+          scale_point_id: null,
+        },
+        {
+          id: 18714893,
+          txt: "Mango",
+          img: "",
+          position: "0.000000000000",
+          question_id: 7329846,
+          scale_point_id: null,
+        },
+      ],
+      tags: [],
+    },
+    {
+      id: 7329850,
+      rtxt: "What's on your mind right now?",
+      type: "TextInput",
+      multiple_answers: false,
+      is_required: false,
+      properties: {
+        data: {
+          type: "SINGLE_LINE",
+        },
+      },
+      parent_question_id: null,
+      position: "0.000000000000",
+      created_at: "2023-04-27T10:21:57.943Z",
+      updated_at: "2023-04-27T10:22:13.212Z",
+      section: {
         position: "3.000000000000000",
       },
       annotations: [],
@@ -160,83 +178,22 @@ let qnData = {
       tags: [],
     },
     {
-      id: 7314209,
-      rtxt: "On a scale of 0-10, how likely are you to recommend MediaPandaa to a friend or colleague?",
-      type: "OpinionScale",
+      id: 7329853,
+      rtxt: "How was the survey experience?",
+      type: "TextInput",
       multiple_answers: false,
-      is_required: true,
+      is_required: false,
       properties: {
         data: {
-          min: "builder.opinion_scale.min",
-          max: "builder.opinion_scale.max",
-          step: 10,
-          start: 0,
-          mid: "",
-        },
-        clone: {
-          id: 619412,
+          type: "SINGLE_LINE",
         },
       },
       parent_question_id: null,
       position: "0.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.710Z",
+      created_at: "2023-04-27T10:22:15.492Z",
+      updated_at: "2023-04-27T10:22:48.811Z",
       section: {
         position: "4.000000000000000",
-      },
-      annotations: [],
-      scale_points: [],
-      choices: [],
-      tags: [],
-    },
-    {
-      id: 7314212,
-      rtxt: "What prompted you to score an $Question_7314209?",
-      type: "TextInput",
-      multiple_answers: false,
-      is_required: true,
-      properties: {
-        data: {
-          type: "MULTI_LINE",
-          analyze_sentiment: false,
-        },
-        clone: {
-          id: 619415,
-        },
-      },
-      parent_question_id: null,
-      position: "0.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.768Z",
-      section: {
-        position: "5.000000000000000",
-      },
-      annotations: [],
-      scale_points: [],
-      choices: [],
-      tags: [],
-    },
-    {
-      id: 7314207,
-      rtxt: "What prompted you to score a $Question_7314209?",
-      type: "TextInput",
-      multiple_answers: false,
-      is_required: true,
-      properties: {
-        data: {
-          type: "MULTI_LINE",
-          analyze_sentiment: false,
-        },
-        clone: {
-          id: 619410,
-        },
-      },
-      parent_question_id: null,
-      position: "1.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.760Z",
-      section: {
-        position: "6.000000000000000",
       },
       annotations: [],
       scale_points: [],
@@ -266,7 +223,10 @@ const getQns = async (setQnData) => {
 
 export default function Survey() {
   useEffect(() => {
-    // getQns((questions)=>{qnData=questions;setCurrentQn(0)});
+    // getQns((questions) => {
+    //   qnData = questions;
+    //   setCurrentQn(0);
+    // });
     setCurrentQn(0);
   }, []);
 
