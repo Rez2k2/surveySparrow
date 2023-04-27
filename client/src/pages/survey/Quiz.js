@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import * as Icons from "@iconscout/react-unicons";
 import { transform } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const speechMe = (msg) => {
   const utterance = new SpeechSynthesisUtterance(msg);
@@ -18,9 +18,29 @@ const speechMe = (msg) => {
 };
 
 export default function Quiz({ qnData, index }) {
+  const [on, setOn] = useState(false);
   useEffect(() => {
     speechMe(qnData.rtxt);
   }, [index]);
+  var speech = null;
+  speech = true;
+  window.speechRecognition = window.webkitSpeechRecognition;
+  const recognition = new speechRecognition();
+  recognition.interimResults = true;
+  recognition.addEventListener("result", (e) => {
+    const transcript = Array.from(e.results)
+      .map((result) => result[0])
+      .map((result) => result.transcript);
+    console.log(transcript);
+    console.log(on);
+  });
+  const transcribe = () => {
+    if (on) {
+      recognition.start();
+    } else {
+      recognition.stop();
+    }
+  };
   return (
     <Box position="relative" maxWidth="45%" minWidth="350px" marginX="20px">
       <Center
@@ -93,6 +113,10 @@ export default function Quiz({ qnData, index }) {
           "&:hover svg": {
             fill: "white",
           },
+        }}
+        onClick={() => {
+          setOn(!on);
+          transcribe();
         }}
       >
         <Icons.UilMicrophone />
