@@ -269,12 +269,6 @@ export default function Survey() {
               height: "auto",
             },
           }}
-          _hover={{
-            svg: {
-              width: "4em",
-              height: "auto",
-            },
-          }}
           width="100%"
           height="100%"
           sx={{

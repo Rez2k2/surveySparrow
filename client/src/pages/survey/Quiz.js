@@ -8,8 +8,19 @@ import {
   Heading,
   Textarea,
 } from "@chakra-ui/react";
+import * as Icons from "@iconscout/react-unicons";
+import { transform } from "framer-motion";
+import { useEffect } from "react";
+
+const speechMe = (msg) => {
+  const utterance = new SpeechSynthesisUtterance(msg);
+  speechSynthesis.speak(utterance);
+};
 
 export default function Quiz({ qnData, index }) {
+  useEffect(() => {
+    speechMe(qnData.rtxt);
+  }, [index]);
   return (
     <Box position="relative" maxWidth="45%" minWidth="350px" marginX="20px">
       <Center
@@ -27,6 +38,15 @@ export default function Quiz({ qnData, index }) {
       <Text fontSize="larger" marginBottom="5">
         {qnData.rtxt}
       </Text>
+      <Button
+        onClick={() => speechMe(qnData.rtxt)}
+        position="absolute"
+        right="-45px"
+        top="-2px"
+        variant="unstyled"
+      >
+        <Icons.UilVolume />
+      </Button>
       <VStack>
         {qnData.type === "TextInput" ? (
           <Textarea
@@ -53,6 +73,30 @@ export default function Quiz({ qnData, index }) {
           })
         )}
       </VStack>
+      <Box
+        position="fixed"
+        bottom="20px"
+        right="calc(50% + 76px)"
+        as="button"
+        colorScheme="teal"
+        border="1px solid teal"
+        borderRadius="50%"
+        width="fit-content"
+        padding="25"
+        sx={{
+          svg: {
+            fill: "teal",
+          },
+          "&:hover": {
+            bgColor: "teal",
+          },
+          "&:hover svg": {
+            fill: "white",
+          },
+        }}
+      >
+        <Icons.UilMicrophone />
+      </Box>
     </Box>
   );
 }
