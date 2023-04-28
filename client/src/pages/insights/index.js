@@ -58,13 +58,14 @@ export default function Insights() {
   //       });
   //   };
 
-  const message = "hi there";
+  const message =
+    "Im creating a model where it analyses emotion of people who take up surveys through voice recognition, this particulat question has made to get sad emotion from users, why? 'When was the last time you cried?' ";
   const sendMessage = (message) => {
     const url = "https://api.openai.com/v1/chat/completions";
     const headers = {
       "content-type": "application/json",
       //prettier-ignore
-      Authorization: 'Bearer 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',
+      "Authorization": `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
     };
     const data = {
       model: "gpt-3.5-turbo-0301",
@@ -74,7 +75,8 @@ export default function Insights() {
     axios
       .post(url, data, { headers: headers })
       .then((response) => {
-        console.log(response);
+        console.log(response.data.choices[0].message.content);
+        setOutputText(response.data.choices[0].message.content);
       })
       .catch((error) => {
         console.log(error);
