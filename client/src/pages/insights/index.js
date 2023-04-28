@@ -4,9 +4,6 @@ import { Line } from "react-chartjs-2";
 import axios from "axios";
 import { Chart as ChartJS } from "chart.js/auto";
 
-const apiKey = "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";
-const apiUrl = "https://api.openai.com/v1/engine/davinci-codex/completions";
-
 function ChartComponent() {
   const data = {
     labels: ["1", "2", "3", "4", "5"],
@@ -60,11 +57,41 @@ export default function Insights() {
   //         console.error("Error:", error);
   //       });
   //   };
+
+  const message = "hi there";
+  const sendMessage = (message) => {
+    const url = "https://api.openai.com/v1/chat/completions";
+    const headers = {
+      "content-type": "application/json",
+      //prettier-ignore
+      Authorization: 'Bearer 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',
+    };
+    const data = {
+      model: "gpt-3.5-turbo-0301",
+      messages: [{ role: "user", content: message }],
+    };
+
+    axios
+      .post(url, data, { headers: headers })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <HStack>
       <Center width="50%" height="100vh">
         <VStack padding="13px">
-          <Button onClick={handleSubmit}>Insights</Button>
+          <Button
+            onClick={() => {
+              sendMessage(message);
+            }}
+          >
+            Insights
+          </Button>
           <Text>{outputText}</Text>
         </VStack>
       </Center>
