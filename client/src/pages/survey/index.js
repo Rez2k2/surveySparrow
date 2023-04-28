@@ -1,6 +1,6 @@
 import { Button, Center, Box, VStack, HStack } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
-import Quiz from "./Quiz";
+import Quiz from "../../components/Quiz";
 import * as Icons from "@iconscout/react-unicons";
 
 const filterCriteria = {
