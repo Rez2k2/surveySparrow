@@ -23,7 +23,6 @@ const speechMe = (msg) => {
 
 export default function Quiz({ qnData, index }) {
   const [clickedElement, setClickedElement] = useState(undefined);
-  console.log(clickedElement);
   const [grammar, setGrammar] = useState(undefined);
   const [choices, setChoices] = useState([]);
   const [value, setValue] = useState("");
@@ -46,6 +45,7 @@ export default function Quiz({ qnData, index }) {
     } else {
       setGrammar(undefined);
     }
+    setClickedElement(JSON.parse(localStorage.getItem("responses"))[index]);
   }, [index]);
 
   var speech = null;
@@ -62,11 +62,6 @@ export default function Quiz({ qnData, index }) {
   }
 
   recognition.interimResults = true;
-  if (qnData.type === "TextInput") {
-    recognition.continuous = true;
-  } else {
-    recognition.continuous = false;
-  }
   recognition.addEventListener("result", (e) => {
     const transcript = Array.from(e.results)
       .map((result) => result[0])
@@ -87,7 +82,6 @@ export default function Quiz({ qnData, index }) {
         const crntRating = Math.floor(
           stringSimilarity.compareTwoStrings(transcript[0], choices[i]) * 10
         );
-        console.log(crntRating);
         if (crntRating > max1[1]) {
           max2 = [...max1];
           max1 = [i, crntRating];
@@ -101,8 +95,10 @@ export default function Quiz({ qnData, index }) {
       } else {
         if (max1[1] > 4) {
           setClickedElement(max1[0]);
+          const response = JSON.parse(localStorage.getItem("responses"));
+          response[index] = max1[0];
+          localStorage.setItem("responses", JSON.stringify(response));
         }
-        console.log("came here");
       }
     } else {
       setValue(transcript.join(" "));
@@ -137,18 +133,25 @@ export default function Quiz({ qnData, index }) {
       </Button>
       <VStack>
         {qnData.type === "TextInput" ? (
-          <ModTextArea value={value} setValue={setValue} />
+          <ModTextArea index={index} value={value} setValue={setValue} />
         ) : (
-          qnData.choices.map((item, index) => {
+          qnData.choices.map((item, i) => {
             return (
               <Button
-                onClick={() => setClickedElement(index)}
-                className={clickedElement === index ? styles.active : ""}
+                onClick={() => {
+                  setClickedElement(i);
+                  const response = JSON.parse(
+                    localStorage.getItem("responses")
+                  );
+                  response[index] = i;
+                  localStorage.setItem("responses", JSON.stringify(response));
+                }}
+                className={clickedElement === i ? styles.active : ""}
                 variant={"outline"}
                 colorScheme="teal"
                 width={"full"}
                 justifyContent="flex-start"
-                key={index}
+                key={i}
               >
                 {item.txt}
               </Button>

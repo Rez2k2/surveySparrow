@@ -4,11 +4,51 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 
 export default function MicBtn({ recognition }) {
-  const [listening, setListening] = useState(false);
+  let mediaRecorder;
+  navigator.mediaDevices
+    .getUserMedia({ audio: true, video: false })
+    .then((stream) => {
+      // Create a new MediaRecorder instance
+      mediaRecorder = new MediaRecorder(stream);
+      const audioChunks = [];
+
+      // When the MediaRecorder receives data, add it to audioChunks
+      mediaRecorder.addEventListener("dataavailable", (event) => {
+        audioChunks.push(event.data);
+      });
+
+      // When the recording stops, send the audio data to the API
+      mediaRecorder.addEventListener("stop", () => {
+        const audioBlob = new Blob(audioChunks);
+        const formData = new FormData();
+        formData.append("audio", audioBlob, "recording.wav");
+
+        fetch("http://127.0.0.1:5000", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((result) => {
+            console.log("Response from API:", result);
+          })
+          .catch((error) => {
+            console.error("Error sending audio to API:", error);
+          });
+      });
+    });
 
   recognition.onspeechend = () => {
+    mediaRecorder.stop();
     setListening(false);
   };
+
+  recognition.onspeechstart = () => {
+    mediaRecorder.start();
+  };
+  const [listening, setListening] = useState(false);
+
   return (
     <Box
       animate={{

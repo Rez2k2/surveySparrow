@@ -17,11 +17,15 @@ import Link from "next/link";
 const regexExp =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi;
 
+const surveyId = "436862";
 const validateDetails = (e, name, email) => {
+  localStorage.setItem("surveyId", surveyId);
+  localStorage.setItem("responses", JSON.stringify({}));
   if (!(name && regexExp.test(email))) {
-    e.preventDefault();
+    localStorage.removeItem("user");
     return;
   }
+  localStorage.setItem("user", JSON.stringify({ name, email }));
 };
 
 export default function Home({ details }) {

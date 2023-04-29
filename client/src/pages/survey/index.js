@@ -1,7 +1,8 @@
 import { Button, Center, Box, VStack, HStack } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Quiz from "../../components/Quiz";
 import * as Icons from "@iconscout/react-unicons";
+import Link from "next/link";
 
 const filterCriteria = {
   multiple_answers: false,
@@ -77,33 +78,6 @@ let qnData = {
       tags: [],
     },
     {
-      id: 7314211,
-      rtxt: "Off the top of your head, what are the 3 words that you'll use to describe MediaPandaa?",
-      type: "TextInput",
-      multiple_answers: false,
-      is_required: true,
-      properties: {
-        data: {
-          type: "MULTI_LINE",
-          analyze_sentiment: false,
-        },
-        clone: {
-          id: 619414,
-        },
-      },
-      parent_question_id: null,
-      position: "0.000000000000",
-      created_at: "2023-04-26T06:51:45.710Z",
-      updated_at: "2023-04-26T06:51:45.710Z",
-      section: {
-        position: "1.000000000000000",
-      },
-      annotations: [],
-      scale_points: [],
-      choices: [],
-      tags: [],
-    },
-    {
       id: 7329846,
       rtxt: "Your most favourite dish",
       type: "MultiChoice",
@@ -122,7 +96,7 @@ let qnData = {
       created_at: "2023-04-27T10:21:02.499Z",
       updated_at: "2023-04-27T10:21:13.468Z",
       section: {
-        position: "2.000000000000000",
+        position: "1.000000000000000",
       },
       annotations: [],
       scale_points: [],
@@ -155,31 +129,118 @@ let qnData = {
       tags: [],
     },
     {
-      id: 7329850,
-      rtxt: "What's on your mind right now?",
-      type: "TextInput",
+      id: 7340910,
+      rtxt: "Your favourite game",
+      type: "MultiChoice",
       multiple_answers: false,
       is_required: false,
       properties: {
         data: {
-          type: "SINGLE_LINE",
+          type: "UNLIMITED",
+          min_limit: "",
+          max_limit: "",
+          exact_choices: "",
         },
       },
       parent_question_id: null,
       position: "0.000000000000",
-      created_at: "2023-04-27T10:21:57.943Z",
-      updated_at: "2023-04-27T10:22:13.212Z",
+      created_at: "2023-04-28T07:45:27.095Z",
+      updated_at: "2023-04-28T07:45:42.059Z",
+      section: {
+        position: "2.000000000000000",
+      },
+      annotations: [],
+      scale_points: [],
+      choices: [
+        {
+          id: 18731370,
+          txt: "Apex",
+          img: "",
+          position: "3.000000000000",
+          question_id: 7340910,
+          scale_point_id: null,
+        },
+        {
+          id: 18731369,
+          txt: "Valorant",
+          img: "",
+          position: "2.000000000000",
+          question_id: 7340910,
+          scale_point_id: null,
+        },
+        {
+          id: 18731368,
+          txt: "GTA 5",
+          img: "",
+          position: "1.000000000000",
+          question_id: 7340910,
+          scale_point_id: null,
+        },
+        {
+          id: 18731366,
+          txt: "Fortnite",
+          img: "",
+          position: "0.000000000000",
+          question_id: 7340910,
+          scale_point_id: null,
+        },
+      ],
+      tags: [],
+    },
+    {
+      id: 7340911,
+      rtxt: "How was the survey experience?",
+      type: "MultiChoice",
+      multiple_answers: false,
+      is_required: false,
+      properties: {
+        data: {
+          type: "UNLIMITED",
+          min_limit: "",
+          max_limit: "",
+          exact_choices: "",
+        },
+      },
+      parent_question_id: null,
+      position: "0.000000000000",
+      created_at: "2023-04-28T07:46:08.191Z",
+      updated_at: "2023-04-28T09:53:04.698Z",
       section: {
         position: "3.000000000000000",
       },
       annotations: [],
       scale_points: [],
-      choices: [],
+      choices: [
+        {
+          id: 18731372,
+          txt: "Excellent",
+          img: "",
+          position: "1.000000000000",
+          question_id: 7340911,
+          scale_point_id: null,
+        },
+        {
+          id: 18731371,
+          txt: "Good",
+          img: "",
+          position: "0.000000000000",
+          question_id: 7340911,
+          scale_point_id: null,
+        },
+        {
+          id: 18731373,
+          txt: "Bad",
+          img: "",
+          position: "2.000000000000",
+          question_id: 7340911,
+          scale_point_id: null,
+        },
+      ],
       tags: [],
     },
     {
       id: 7329853,
-      rtxt: "How was the survey experience?",
+      rtxt: "When was the last time you cried?",
       type: "TextInput",
       multiple_answers: false,
       is_required: false,
@@ -191,7 +252,7 @@ let qnData = {
       parent_question_id: null,
       position: "0.000000000000",
       created_at: "2023-04-27T10:22:15.492Z",
-      updated_at: "2023-04-27T10:22:48.811Z",
+      updated_at: "2023-04-28T09:54:27.360Z",
       section: {
         position: "4.000000000000000",
       },
@@ -204,10 +265,44 @@ let qnData = {
   has_next_page: false,
 };
 
+const sendResponse = (data) => {
+  const surveyId = localStorage.getItem("surveyId");
+  const response = JSON.parse(localStorage.getItem("responses"));
+  const d = new Date();
+  let time = d.toISOString();
+
+  const body = {
+    survey_id: parseInt(surveyId),
+    meta_data: {
+      date_time: time,
+    },
+    answers: Object.keys(response).map((key) => {
+      return {
+        question_id: data[key].id,
+        answer: data[key]?.choices[response[key]]
+          ? [data[key]?.choices[response[key]]?.id]
+          : response[key],
+      };
+    }),
+  };
+  console.log(body);
+  const res = fetch("https://api.surveysparrow.com/v3/responses", {
+    body: JSON.stringify(body),
+    method: "POST",
+    headers: new Headers({
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_KEY}`,
+      "content-type": "application/json",
+    }),
+  }).catch((error) => {
+    // TypeError: Failed to fetch
+    console.log("There was an error", error);
+  });
+};
+
 const getQns = async (setQnData) => {
-  console.log(process.env.NEXT_PUBLIC_API_KEY);
   const res = await fetch(
-    "https://api.surveysparrow.com/v3/questions?survey_id=436862",
+    "https://api.surveysparrow.com/v3/questions?survey_id=" +
+      localStorage.getItem("surveyId"),
 
     {
       method: "GET",
@@ -256,6 +351,8 @@ export default function Survey() {
   //   </div>
   // );
   const navIconWidth = "50px";
+
+  // const [result, setResult] = useState({});
   return (
     <HStack height={"100vh"} width="100vw">
       {currentQn === 0 ? (
@@ -291,8 +388,13 @@ export default function Survey() {
         )}
       </VStack>
       {currentQn != undefined && currentQn == qnData.data.length - 1 ? (
+        // <Link href={{ pathname: "./thanks" }} passHref legacyBehavior>
         <Center
-          as="button"
+          onClick={() => {
+            sendResponse(qnData.data);
+            // localStorage.clear();
+          }}
+          as="a"
           _hover={{
             svg: {
               width: "4em",
@@ -312,6 +414,7 @@ export default function Survey() {
           <Icons.UilCheck />
         </Center>
       ) : (
+        // </Link>
         <Center
           sx={{
             svg: {
